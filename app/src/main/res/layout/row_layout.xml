@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SectionLayout"
+    android:layout_margin="@dimen/spacing_small">
+
+    <RelativeLayout
+        android:id="@+id/progressBarWrapper"
+        style="@style/MatchParentLayout">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/wrapContentLayout"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/errorMessage"
+            style="@style/wrapContentLayout"
+            android:layout_centerInParent="true"
+            android:text="@string/no_internet"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/content"
+        style="@style/SectionLayoutPadded"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/storyNumberText"
+            style="@style/wrapContentLayout"
+            android:text="@string/story_number"
+            android:textSize="@dimen/text_extra_small" />
+
+        <TextView
+            android:id="@+id/storyNumber"
+            style="@style/SectionLayout"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:textSize="@dimen/text_medium"
+            tools:text="2019289" />
+
+        <TextView
+            android:id="@+id/titleText"
+            style="@style/wrapContentLayout"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@string/title"
+            android:textSize="@dimen/text_extra_small" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/SectionLayout"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:textSize="@dimen/text_large"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/authorTitle"
+            style="@style/wrapContentLayout"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@string/by"
+            android:textSize="@dimen/text_extra_small" />
+
+        <TextView
+            android:id="@+id/author"
+            style="@style/SectionLayout"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:textSize="@dimen/text_medium"
+            tools:text="Author" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "856565858593",
+    "firebase_url": "https://playapplication-ea3fb.firebaseio.com",
+    "project_id": "playapplication-ea3fb",
+    "storage_bucket": "playapplication-ea3fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856565858593:android:93767ccd5425958eaf3e60",
+        "android_client_info": {
+          "package_name": "com.manishpatole.playapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856565858593-lds116ek1leg44tjc4fuqgcbdpju1r9v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz9a24GqycPIv7F1pGMeqHDrHl1K2hWkc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856565858593-lds116ek1leg44tjc4fuqgcbdpju1r9v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

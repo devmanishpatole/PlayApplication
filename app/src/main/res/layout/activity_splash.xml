@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.airbnb.lottie.LottieAnimationView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchParentLayout"
+    app:lottie_autoPlay="true"
+    app:lottie_fileName="stay_home.json"
+    app:lottie_loop="true"
+    tools:context=".splash.SplashActivity" />
