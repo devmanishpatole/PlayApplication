@@ -1,0 +1,107 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.manishpatole.playapplication"
+        minSdkVersion rootProject.ext.min_sdk_version
+        targetSdkVersion rootProject.ext.target_sdk_version
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://hacker-news.firebaseio.com/v0/\"")
+            buildConfigField("String", "LOGIN_URL", "\"https://test-login-aaplication.herokuapp.com/login\"")
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"https://hacker-news.firebaseio.com/v0/\"")
+            buildConfigField("String", "LOGIN_URL", "\"https://test-login-aaplication.herokuapp.com/login\"")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.returnDefaultValues = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+    // CardView
+    implementation "androidx.cardview:cardview:$support_library_version"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+    // Lifecycle Annotations
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
+    implementation "androidx.legacy:legacy-support-v4:$legacy_support_version"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // Coroutine extensions
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutine_extesnsion_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$coroutine_extesnsion_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$coroutine_extesnsion_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+
+    //Lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
+
+    implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_version"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-analytics-ktx:$analytics_version"
+    implementation "com.google.firebase:firebase-crashlytics:$crashlytics_version"
+
+    // Testing
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+    testImplementation "android.arch.core:core-testing:$core_testing_version"
+    androidTestImplementation "androidx.test:core-ktx:$test_core_ktx_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+}
+
+
+

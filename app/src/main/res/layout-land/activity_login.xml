@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchParentPadded"
+    tools:context=".login.ui.LoginActivity">
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchTheme"
+        style="@style/wrapContentLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameWrapper"
+        style="@style/SectionLayout"
+        android:layout_marginTop="@dimen/spacing_large"
+        app:layout_constraintBottom_toTopOf="@id/passwordWrapper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editUsername"
+            style="@style/SectionLayout"
+            android:hint="@string/email"
+            android:text="test@worldofplay.in" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordWrapper"
+        style="@style/SectionLayout"
+        android:layout_marginTop="@dimen/spacing_large"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPassword"
+            style="@style/SectionLayout"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:text="Worldofplay@2020" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/loginButton"
+        style="@style/SectionLayout"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="@string/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordWrapper" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
