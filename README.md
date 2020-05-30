@@ -1,45 +1,99 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# Play Application
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+**PlayApplication** is a sample Android application 📱 built to demonstrate use of *Modern Android development* tools.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
 
+## About
+---
+Application simply loads **Hacker news top stories** data from API and displays detail, additionally user can switch the application theme.
+User has to login using credentials
+username = test@worldofplay.in and Password = Worldofplay@2020
+
+Authentication API is hosted on [Heroku](https://www.heroku.com/about) cloud platform, API is created using [Python3](https://www.python.org/about/) with [Flask](https://flask.palletsprojects.com/en/1.1.x/)
+
+
+## Built With 🛠
+---
+- [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
+- [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous and more..
+- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - Collection of libraries that help you design robust, testable, and maintainable apps.
+  - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Data objects that notify views when the underlying data changes.
+  - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data and bridges the gap between view and model.
+- [Dagger 2](https://dagger.dev/) - Dependency Injection Framework
+- [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java.
+- [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
+
+**Implemented Lifecycle aware view holder which fetches and loads the information on each row respecting the lifecycle of row's view components.**
+
+# Package Structure
 ---
 
-## Edit a file
+    .
+    |── application         # Application class
+    |
+    ├── base                # Base classes
+    |
+    ├── di                  # Dependency Injection
+    │   ├── component       # DI Components
+    │   └── module          # DI Modules
+    |
+    |── login
+    │   ├── model           # Data classes
+    |   ├── repository      # Login network repository class
+    │   ├── service         # Login Retrofit API for remote end point.
+    |   │── ui              # Login Activity
+    │   └── viewmodel       # Login view models
+    |
+    ├── network             # Network class
+    |
+    |── splash              # Splash Activity and Login manager view model
+    |
+    ├── story               # Story
+    │   ├── adapter         # List adapter
+    │   ├── model           # Data classes
+    |   │── repository      # Story network repository
+    |   │── service         # Story Retrofit API for remote end point.
+    |   │── ui              # Activities and Fragment
+    |   │── viewholder      # Story list view holder
+    │   └── viewmodel       # Story view models
+    │
+    ├── theme               # Theme manager
+    │
+    └── utils               # Utility Classes
+        └── extension       # Extension classes
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
-
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
-
+## Architecture
 ---
+This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture.
 
-## Create a file
-
-Next, you’ll add a new file to this repository.
-
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
-
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
-
+## Contact
 ---
+If you need any help, you can connect with me.
 
-## Clone a repository
+Connect:- manish.patole.mp@gmail.com
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+## License
+---
+```
+MIT License
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+Copyright (c) 2020 Manish Patole
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
