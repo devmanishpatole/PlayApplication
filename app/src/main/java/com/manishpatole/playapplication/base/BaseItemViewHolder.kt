@@ -39,7 +39,7 @@ abstract class BaseItemViewHolder<T, VM : BaseItemViewModel<T>>(
         viewModel.updateData(data)
     }
 
-    protected fun onCreate() {
+    private fun onCreate() {
         injectDependencies(buildViewHolderComponent())
         lifecycleRegistry.currentState = Lifecycle.State.INITIALIZED
         lifecycleRegistry.currentState = Lifecycle.State.CREATED

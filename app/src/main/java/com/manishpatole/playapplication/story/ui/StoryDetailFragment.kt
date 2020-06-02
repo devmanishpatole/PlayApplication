@@ -1,8 +1,7 @@
 package com.manishpatole.playapplication.story.ui
 
-import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.core.os.bundleOf
 import com.manishpatole.playapplication.R
 import com.manishpatole.playapplication.base.BaseFragment
 import com.manishpatole.playapplication.di.component.FragmentComponent
@@ -14,12 +13,8 @@ class StoryDetailFragment : BaseFragment<DisplayStoryDetailViewModel>() {
 
     companion object {
         private const val TOP_STORY = "TOP_STORY"
-        fun newInstance(topStory: TopStory): StoryDetailFragment {
-            val fragment = StoryDetailFragment()
-            fragment.arguments = Bundle().apply {
-                putParcelable(TOP_STORY, topStory)
-            }
-            return fragment
+        fun newInstance(topStory: TopStory) = StoryDetailFragment().apply {
+            arguments = bundleOf(TOP_STORY to topStory)
         }
     }
 
