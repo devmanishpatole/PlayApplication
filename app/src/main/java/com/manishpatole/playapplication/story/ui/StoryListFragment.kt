@@ -104,23 +104,25 @@ class StoryListFragment : BaseFragment<StoryListViewModel>() {
     }
 
     private fun loadDetails(data: List<Int>) {
-        val numberList = ArrayList<StoryRequestWrapper>()
-
-        for (i in data) {
-            val response = StoryRequestWrapper(i, null)
-            numberList.add(response)
-        }
-
-        listAdapter.appendData(numberList)
-
-        list.run {
-            adapter = listAdapter
+        viewModel.numberList?.takeIf { it.isNotEmpty() }?.let { list ->
+            listAdapter.appendData(list)
+        } ?: run {
+            val numberList = ArrayList<StoryRequestWrapper>()
+            for (i in data) {
+                val response = StoryRequestWrapper(i, null)
+                numberList.add(response)
+            }
+            viewModel.numberList = numberList
+            listAdapter.appendData(numberList)
         }
 
         listAdapter.onItemClick = {
             sharedViewModel.launchDetail(it)
         }
 
+        list.run {
+            adapter = listAdapter
+        }
     }
 
     override fun onDestroyView() {
