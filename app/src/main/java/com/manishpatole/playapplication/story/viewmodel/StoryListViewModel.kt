@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.manishpatole.playapplication.base.BaseViewModel
+import com.manishpatole.playapplication.story.model.StoryRequestWrapper
 import com.manishpatole.playapplication.story.repository.StoryListRepository
 import com.manishpatole.playapplication.utils.NetworkHelper
 import com.manishpatole.playapplication.utils.Result
@@ -19,6 +20,8 @@ class StoryListViewModel(
     private val _stories = MutableLiveData<Result<List<Int>?>>()
     val stories: LiveData<Result<List<Int>?>>
         get() = _stories
+
+    var numberList: ArrayList<StoryRequestWrapper>? = null
 
     fun loadStories() {
         if (storyList?.isNotEmpty() == true) {
