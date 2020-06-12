@@ -50,7 +50,7 @@ class LoginActivityTest {
     @Mock
     lateinit var loginRepository: LoginRepository
 
-    lateinit var networkHelper: NetworkHelper
+    private lateinit var networkHelper: NetworkHelper
 
     @Before
     fun setup() {
@@ -79,7 +79,7 @@ class LoginActivityTest {
         activity.runOnUiThread {
             activity.loginButton.performClick()
         }
-        verify(loginRepository).login(any(), any(), any())
+        verify(loginRepository).login(any())
     }
 
     @ExperimentalCoroutinesApi
@@ -92,7 +92,7 @@ class LoginActivityTest {
         activity.runOnUiThread {
             activity.loginButton.performClick()
         }
-        verify(loginRepository, never()).login(any(), any(), any())
+        verify(loginRepository, never()).login(any())
     }
 
     @ExperimentalCoroutinesApi
@@ -108,7 +108,7 @@ class LoginActivityTest {
         activity.runOnUiThread {
             activity.loginButton.performClick()
         }
-        verify(loginRepository, never()).login(any(), any(), any())
+        verify(loginRepository, never()).login(any())
     }
 
     @ExperimentalCoroutinesApi
@@ -124,7 +124,7 @@ class LoginActivityTest {
         activity.runOnUiThread {
             activity.loginButton.performClick()
         }
-        verify(loginRepository, never()).login(any(), any(), any())
+        verify(loginRepository, never()).login(any())
     }
 
     @ExperimentalCoroutinesApi
@@ -140,7 +140,7 @@ class LoginActivityTest {
         activity.runOnUiThread {
             activity.loginButton.performClick()
         }
-        verify(loginRepository, never()).login(any(), any(), any())
+        verify(loginRepository, never()).login(any())
     }
 
     private fun enableInternet() {

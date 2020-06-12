@@ -1,14 +1,14 @@
 package com.manishpatole.playapplication.login
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.manishpatole.playapplication.CoroutinesTestRule
+import com.manishpatole.playapplication.R
 import com.manishpatole.playapplication.login.model.LoginRequest
+import com.manishpatole.playapplication.login.model.LoginStatus
 import com.manishpatole.playapplication.login.model.LoginSuccess
 import com.manishpatole.playapplication.login.repository.LoginRepository
-import com.manishpatole.playapplication.login.service.LoginService
 import com.manishpatole.playapplication.login.viewmodel.LoginViewModel
 import com.manishpatole.playapplication.utils.MockNetworkHelper
 import com.manishpatole.playapplication.utils.NetworkHelper
@@ -26,11 +26,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import retrofit2.Response
 import javax.net.ssl.HttpsURLConnection
 
 
@@ -52,12 +50,6 @@ class LoginViewModelTest {
 
     @Mock
     lateinit var loginRepository: LoginRepository
-
-    @Mock
-    lateinit var loginService: LoginService
-
-    @Mock
-    lateinit var preferences: SharedPreferences
 
     private lateinit var networkHelper: NetworkHelper
 
@@ -93,7 +85,7 @@ class LoginViewModelTest {
         val request = LoginRequest("man@info.com", "man!Info1")
         viewModel.performLogin(request)
         assertEquals(Result.loading(null), viewModel.loginResponse.value)
-        verify(loginRepository).login(any(), any(), any())
+        verify(loginRepository).login(any())
     }
 
     @ExperimentalCoroutinesApi
@@ -102,12 +94,8 @@ class LoginViewModelTest {
         (networkHelper as MockNetworkHelper).isConnected = true
         val request = LoginRequest("man@info.com", "man!Info1")
 
-        loginRepository = LoginRepository(loginService, preferences)
-
-        val res = mock(Response::class.java)
-        doReturn(true).`when`(res).isSuccessful
-        doReturn(LoginSuccess("XYZ")).`when`(res).body()
-        doReturn(res).`when`(loginService).login(any(), any())
+        val loginStatus = LoginStatus.Success(LoginSuccess("XYZ"))
+        doReturn(loginStatus).`when`(loginRepository).login(request)
 
         viewModel.loginResponse.observeForever { result ->
             when (result.status) {
@@ -126,17 +114,22 @@ class LoginViewModelTest {
         (networkHelper as MockNetworkHelper).isConnected = true
         val request = LoginRequest("man@info.com", "man!Info1")
 
-        loginRepository = LoginRepository(loginService, preferences)
-
-        val res = mock(Response::class.java)
-        doReturn(false).`when`(res).isSuccessful
-        doReturn(400).`when`(res).body()
-        doReturn(res).`when`(loginService).login(any(), any())
+        val loginStatus = LoginStatus.Failure(400)
+        doReturn(loginStatus).`when`(loginRepository).login(request)
 
         viewModel.loginResponse.observeForever { result ->
             when (result.status) {
                 Status.LOADING -> assertNull(result.data)
-                Status.ERROR -> assertEquals(HttpsURLConnection.HTTP_BAD_REQUEST, result.data)
+                Status.ERROR -> {
+                    assertEquals(
+                        HttpsURLConnection.HTTP_BAD_REQUEST,
+                        (result.data as LoginStatus.Failure).error
+                    )
+                    assertEquals(
+                        R.string.bad_request,
+                        (result.data as LoginStatus.Failure).errorMessageId
+                    )
+                }
                 else -> fail()
             }
         }
@@ -146,27 +139,33 @@ class LoginViewModelTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun testPerformLoginWithUnauthorisedError() = coroutinesTestRule.testDispatcher.runBlockingTest {
-        (networkHelper as MockNetworkHelper).isConnected = true
-        val request = LoginRequest("man@info.com", "man!Info1")
+    fun testPerformLoginWithUnauthorisedError() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            (networkHelper as MockNetworkHelper).isConnected = true
+            val request = LoginRequest("man@info.com", "man!Info1")
 
-        loginRepository = LoginRepository(loginService, preferences)
+            val loginStatus = LoginStatus.Failure(401)
+            doReturn(loginStatus).`when`(loginRepository).login(request)
 
-        val res = mock(Response::class.java)
-        doReturn(false).`when`(res).isSuccessful
-        doReturn(401).`when`(res).body()
-        doReturn(res).`when`(loginService).login(any(), any())
-
-        viewModel.loginResponse.observeForever { result ->
-            when (result.status) {
-                Status.LOADING -> assertNull(result.data)
-                Status.ERROR -> assertEquals(HttpsURLConnection.HTTP_UNAUTHORIZED, result.data)
-                else -> fail()
+            viewModel.loginResponse.observeForever { result ->
+                when (result.status) {
+                    Status.LOADING -> assertNull(result.data)
+                    Status.ERROR -> {
+                        assertEquals(
+                            HttpsURLConnection.HTTP_UNAUTHORIZED,
+                            (result.data as LoginStatus.Failure).error
+                        )
+                        assertEquals(
+                            R.string.unauthorised,
+                            (result.data as LoginStatus.Failure).errorMessageId
+                        )
+                    }
+                    else -> fail()
+                }
             }
-        }
 
-        viewModel.performLogin(request)
-    }
+            viewModel.performLogin(request)
+        }
 
     @ExperimentalCoroutinesApi
     @Test
@@ -174,17 +173,22 @@ class LoginViewModelTest {
         (networkHelper as MockNetworkHelper).isConnected = true
         val request = LoginRequest("man@info.com", "man!Info1")
 
-        loginRepository = LoginRepository(loginService, preferences)
-
-        val res = mock(Response::class.java)
-        doReturn(false).`when`(res).isSuccessful
-        doReturn(500).`when`(res).body()
-        doReturn(res).`when`(loginService).login(any(), any())
+        val loginStatus = LoginStatus.Failure(500)
+        doReturn(loginStatus).`when`(loginRepository).login(request)
 
         viewModel.loginResponse.observeForever { result ->
             when (result.status) {
                 Status.LOADING -> assertNull(result.data)
-                Status.ERROR -> assertEquals(HttpsURLConnection.HTTP_SERVER_ERROR, result.data)
+                Status.ERROR -> {
+                    assertEquals(
+                        HttpsURLConnection.HTTP_SERVER_ERROR,
+                        (result.data as LoginStatus.Failure).error
+                    )
+                    assertEquals(
+                        R.string.something_went_wrong,
+                        (result.data as LoginStatus.Failure).errorMessageId
+                    )
+                }
                 else -> fail()
             }
         }
@@ -203,7 +207,7 @@ class LoginViewModelTest {
             }
 
             viewModel.performLogin(request)
-            verify(loginRepository, never()).login(any(), any(), any())
+            verify(loginRepository, never()).login(any())
         }
 
 }
