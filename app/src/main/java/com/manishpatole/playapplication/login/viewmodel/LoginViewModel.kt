@@ -4,14 +4,17 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.manishpatole.playapplication.R
 import com.manishpatole.playapplication.base.BaseViewModel
 import com.manishpatole.playapplication.login.model.LoginRequest
+import com.manishpatole.playapplication.login.model.LoginStatus
 import com.manishpatole.playapplication.login.repository.LoginRepository
 import com.manishpatole.playapplication.utils.NetworkHelper
 import com.manishpatole.playapplication.utils.Result
 import com.manishpatole.playapplication.utils.validateEmail
 import com.manishpatole.playapplication.utils.validatePassword
 import kotlinx.coroutines.launch
+import javax.net.ssl.HttpsURLConnection
 
 
 class LoginViewModel(
@@ -64,13 +67,20 @@ class LoginViewModel(
         if (checkInternetConnection()) {
             _loginResponse.value = Result.loading(null)
             viewModelScope.launch {
-                loginRepository.login(loginRequest,
-                    {
-                        _loginResponse.postValue(Result.success(it?.token))
-                    },
-                    {
-                        _loginResponse.postValue(Result.error(it))
-                    })
+                when (val status = loginRepository.login(loginRequest)) {
+                    is LoginStatus.Success -> _loginResponse.postValue(Result.success(status.success?.token))
+                    is LoginStatus.Failure -> {
+                        when (status.error) {
+                            HttpsURLConnection.HTTP_UNAUTHORIZED -> {
+                                status.errorMessageId = R.string.unauthorised
+                            }
+                            HttpsURLConnection.HTTP_BAD_REQUEST -> {
+                                status.errorMessageId = R.string.bad_request
+                            }
+                        }
+                        _loginResponse.postValue(Result.error(status))
+                    }
+                }
             }
         } else {
             _loginResponse.value = (Result.noInternetError(null))
