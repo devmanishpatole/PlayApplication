@@ -68,8 +68,8 @@ ext {
     lottie_version = '3.4.0'
 
     // Firebase
-    crashlytics_version = '17.0.0'
-    analytics_version = '17.4.2'
+    crashlytics_version = '17.0.1'
+    analytics_version = '17.4.3'
 
 
     // Tests
