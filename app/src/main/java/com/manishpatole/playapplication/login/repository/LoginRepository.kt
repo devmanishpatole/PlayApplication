@@ -14,22 +14,18 @@ class LoginRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
     suspend fun login(loginRequest: LoginRequest): LoginStatus {
-        try {
-            val response = loginService.login(
-                BuildConfig.LOGIN_URL,
-                loginRequest
-            )
-            val status: LoginStatus
-            status = if (response.isSuccessful) {
-                sharedPreferences.edit { putBoolean(USER_INFO, true) }
-                LoginStatus.Success(response.body())
-            } else {
-                LoginStatus.Failure(response.code())
-            }
-            return status
-        } catch (e: Exception) {
-            return LoginStatus.Failure(0)
+        val response = loginService.login(
+            BuildConfig.LOGIN_URL,
+            loginRequest
+        )
+        val status: LoginStatus
+        status = if (response.isSuccessful) {
+            sharedPreferences.edit { putBoolean(USER_INFO, true) }
+            LoginStatus.Success(response.body())
+        } else {
+            LoginStatus.Failure(response.code())
         }
+        return status
     }
-
 }
+

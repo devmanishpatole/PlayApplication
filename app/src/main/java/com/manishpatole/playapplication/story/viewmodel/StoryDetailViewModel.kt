@@ -9,6 +9,7 @@ import com.manishpatole.playapplication.story.repository.StoryDetailRepository
 import com.manishpatole.playapplication.utils.NetworkHelper
 import com.manishpatole.playapplication.utils.Result
 import com.manishpatole.playapplication.utils.Status
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ open class StoryDetailViewModel @Inject constructor(
         get() = _listResponseObserver
 
     fun getStoryDetail(data: StoryRequestWrapper) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             if (checkInternetConnection()) {
                 val result = repository.getStoryDetail(data.number)
 
@@ -43,4 +44,9 @@ open class StoryDetailViewModel @Inject constructor(
             }
         }
     }
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        _listResponseObserver.value = Result.error(null)
+    }
+
 }

@@ -9,14 +9,10 @@ class StoryDetailRepository @Inject constructor(
     private val storyService: StoryService
 ) {
     suspend fun getStoryDetail(id: Int): Result<TopStory?> {
-        return try {
-            val response = storyService.getStoryDetail(id)
-            if (response.isSuccessful) {
-                Result.success(response.body())
-            } else {
-                Result.error(null)
-            }
-        } catch (e: Exception) {
+        val response = storyService.getStoryDetail(id)
+        return if (response.isSuccessful) {
+            Result.success(response.body())
+        } else {
             Result.error(null)
         }
     }

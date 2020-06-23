@@ -13,6 +13,7 @@ import com.manishpatole.playapplication.utils.NetworkHelper
 import com.manishpatole.playapplication.utils.Result
 import com.manishpatole.playapplication.utils.validateEmail
 import com.manishpatole.playapplication.utils.validatePassword
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.net.ssl.HttpsURLConnection
 
@@ -66,7 +67,7 @@ class LoginViewModel(
     fun performLogin(loginRequest: LoginRequest) {
         if (checkInternetConnection()) {
             _loginResponse.value = Result.loading(null)
-            viewModelScope.launch {
+            viewModelScope.launch(exceptionHandler) {
                 when (val status = loginRepository.login(loginRequest)) {
                     is LoginStatus.Success -> _loginResponse.postValue(Result.success(status.success?.token))
                     is LoginStatus.Failure -> {
@@ -86,4 +87,9 @@ class LoginViewModel(
             _loginResponse.value = (Result.noInternetError(null))
         }
     }
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        _loginResponse.postValue(Result.error(LoginStatus.Failure(0)))
+    }
+
 }
