@@ -8,14 +8,10 @@ class StoryListRepository @Inject constructor(
     private val storyService: StoryService
 ) {
     suspend fun getStoryList(): Result<List<Int>?> {
-        return try {
-            val response = storyService.getStoryList()
-            if (response.isSuccessful) {
-                Result.success(response.body())
-            } else {
-                Result.error(null)
-            }
-        } catch (e: Exception) {
+        val response = storyService.getStoryList()
+        return if (response.isSuccessful) {
+            Result.success(response.body())
+        } else {
             Result.error(null)
         }
     }

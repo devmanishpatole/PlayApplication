@@ -8,6 +8,7 @@ import com.manishpatole.playapplication.story.model.StoryRequestWrapper
 import com.manishpatole.playapplication.story.repository.StoryListRepository
 import com.manishpatole.playapplication.utils.NetworkHelper
 import com.manishpatole.playapplication.utils.Result
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 class StoryListViewModel(
@@ -28,7 +29,7 @@ class StoryListViewModel(
             _stories.value = Result.success(storyList)
         } else {
             if (networkHelper.isNetworkConnected()) {
-                viewModelScope.launch {
+                viewModelScope.launch(exceptionHandler) {
                     _stories.value = Result.loading(null)
                     val result = storyListRepository.getStoryList()
                     result.data?.let {
@@ -40,6 +41,10 @@ class StoryListViewModel(
                 _stories.value = Result.noInternetError(null)
             }
         }
+    }
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        _stories.value = Result.error()
     }
 
 }
