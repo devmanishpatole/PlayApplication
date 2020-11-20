@@ -4,7 +4,7 @@
 
 
 ## About
----
+
 Application simply loads **Hacker news top stories** data from API and displays detail, additionally user can switch the application theme.
 User has to login using credentials
 username = test@worldofplay.in and Password = Worldofplay@2020
@@ -13,7 +13,7 @@ Authentication API is hosted on [Heroku](https://www.heroku.com/about) cloud pla
 
 
 ## Built With 🛠
----
+
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
 - [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous and more..
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - Collection of libraries that help you design robust, testable, and maintainable apps.
@@ -26,7 +26,7 @@ Authentication API is hosted on [Heroku](https://www.heroku.com/about) cloud pla
 **Implemented Lifecycle aware view holder which fetches and loads the information on each row respecting the lifecycle of row's view components.**
 
 # Package Structure
----
+
 
     .
     |── application         # Application class
@@ -63,17 +63,17 @@ Authentication API is hosted on [Heroku](https://www.heroku.com/about) cloud pla
         └── extension       # Extension classes
 
 ## Architecture
----
+
 This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture.
 
 ## Contact
----
+
 If you need any help, you can connect with me.
 
 Connect:- manish.patole.mp@gmail.com
 
 ## License
----
+
 ```
 MIT License
 
